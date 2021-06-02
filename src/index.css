@@ -251,6 +251,10 @@ li:hover .delete {
 	color: var(--text-color);
 }
 
+.video-container {
+  min-width: 600px;
+}
+
 .video-player {
 	display: flex;
 	justify-content: center;
