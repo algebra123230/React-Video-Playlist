@@ -252,7 +252,7 @@ li:hover .delete {
 }
 
 .video-container {
-  min-width: 600px;
+	min-width: 600px;
 }
 
 .video-player {
