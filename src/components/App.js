@@ -67,7 +67,7 @@ function App() {
 			{showSideBar && (
 				<div className="sidebar">
 					<div className="right">
-						<div data-tip="Add Playlist" className="round-button" onClick={() => showList()}>
+						<div data-tip="Add to Playlist" className="round-button" onClick={() => showList()}>
 							<ReactTooltip effect="solid" place="right" />
 							<PlaylistAddIcon />
 						</div>
