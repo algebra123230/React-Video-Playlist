@@ -8,57 +8,38 @@ import VideoPlayer from './VideoPlayer';
 import Toolbar from './Toolbar';
 import PlayList from './PlayList';
 
-const handlePlaylist = (value, setVideos) => {
-	const urls = value.replace(/(\r\n|\n|\r)/gm, '').split(',');
-	let error = 0;
+const deserializeData = data => {
+	let urls = [];
+	data.forEach(l => {
+		let line = l.trim();
+		let i = line.indexOf(' ');
+		let url, name;
+		if (i >= 0) {
+			url = line.slice(0, i);
+			name = line.slice(i+1);
+		} else {
+			url = line;
+		}
+		if (validURL(url)) {
+			urls.push({ url, name });
+		}
+	});
+	return urls;
+}
 
-	const matches = value.match(/\[(.*?)\]/);
-	const spaceDetect = value.includes(' ');
+const handlePlaylist = (value, videos, setVideos) => {
+	const lines = value.split('\n');
 
 	const storeVideos = urlList => {
-		localStorage.setItem('videos', JSON.stringify(urlList));
-		setVideos(urlList);
+		let newUrlList = videos.concat(urlList);
+		localStorage.setItem('videos', JSON.stringify(newUrlList));
+		setVideos(newUrlList);
 	};
 
-	if (!matches && !spaceDetect) {
-		urls.map(url => {
-			if (!validURL(url.trim())) {
-				error = 1;
-			}
-			return true;
-		});
-	}
+	let urls = deserializeData(lines);
+	storeVideos(urls);
 
-	if (matches && !spaceDetect) {
-		const submatch = matches[1];
-		const urlArray = [];
-		Array.from({ length: submatch }, (_, x) => {
-			return urlArray.push({ url: value.replace(`[${submatch}]`, x + 1) });
-		});
-		storeVideos(urlArray);
-		return true;
-	} else if (spaceDetect && !matches) {
-		const urlArray = [];
-
-		urls.map(url => {
-			const data = url.trim().split(' ');
-			// if (!validURL(data[1].trim())) {
-			// 	error = 1;
-			// }
-			return urlArray.push({ name: data[0], url: data[1] });
-		});
-		storeVideos(urlArray);
-
-		return true;
-	} else if (error === 0) {
-		const urlArray = [];
-
-		urls.map(url => {
-			return urlArray.push({ url });
-		});
-		storeVideos(urlArray);
-		return true;
-	} else return false;
+	return true;
 };
 
 const videosInitialData = () => {
@@ -107,7 +88,7 @@ function App() {
 						<form
 							onSubmit={e => {
 								e.preventDefault();
-								if (handlePlaylist(e.target.playlisturls.value, setVideos)) {
+								if (handlePlaylist(e.target.playlisturls.value, videos, setVideos)) {
 									showList();
 									setError();
 								} else setError('URL List contains invalid URL');
@@ -118,7 +99,7 @@ function App() {
 							<textarea
 								name="playlisturls"
 								required
-								placeholder="Add video's to playlist (separated by comma). You can add custom name to videos (separated by space) Eg: NAME VideoURL."
+								placeholder="Add videos to playlist (separated by newline). You can add custom name to videos (separated by space) Eg: VideoURL NAME."
 							/>
 							<button className="right button-primary">Save Playlist</button>
 						</form>
