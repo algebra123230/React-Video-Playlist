@@ -101,7 +101,7 @@ function App() {
 								required
 								placeholder="Add videos to playlist (separated by newline). You can add custom name to videos (separated by space) Eg: VideoURL NAME."
 							/>
-							<button className="right button-primary">Save Playlist</button>
+							<button className="right button-primary">Add to Playlist</button>
 						</form>
 					)}
 
