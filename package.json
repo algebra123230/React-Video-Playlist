@@ -5,9 +5,9 @@
 	"dependencies": {
 		"@material-ui/core": "^4.1.0",
 		"@material-ui/icons": "^4.1.0",
-		"plyr-react": "^2.2.0",
-		"react": "^16.8.6",
-		"react-dom": "^16.8.6",
+		"plyr-react": "^3.0.8",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
 		"react-scripts": "^3.4.1",
 		"react-tooltip": "^3.10.0",
 		"reactstrap": "^8.0.0",

@@ -1,14 +1,14 @@
 import React from 'react';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import { PlyrComponent } from 'plyr-react';
+import Plyr from 'plyr-react';
 
 export default function VideoPlayer({ currentVideo }) {
 	return (
 		<div className="video-player">
 			{currentVideo ? (
-				<div>
-					<PlyrComponent
-						sources={{
+				<div className="video-container">
+					<Plyr
+						source={{
 							type: 'video',
 							sources: [
 								{
@@ -30,7 +30,7 @@ export default function VideoPlayer({ currentVideo }) {
 						</span>
 						Playlist icon
 					</p>
-					<p>2. Add URL's separated by comma</p>
+					<p>2. Add URLs separated by comma</p>
 					<p>3. Save playlist and watch video</p>
 				</div>
 			)}
