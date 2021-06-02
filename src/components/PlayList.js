@@ -21,19 +21,19 @@ export default function PlayList({ videos, currentVideo, setCurrentVideo, setVid
 					return (
 						<li key={video.url} className={currentVideo === video ? 'active' : ''}>
 							<div onClick={() => setCurrentVideo(video)} href="#" className="d-flex pl-5 nav-video">
-								<VideIcon fontSize="small" />
-								<div>
-									<span>{video.name ? video.name : `Video ${index + 1}`}</span>
+								<div className="select-video"><VideIcon fontSize="small" /></div>
+								<div className="video-title">
+									{video.name ? video.name : `Video ${index + 1}`}
 								</div>
-							</div>
-							<span className="delete" data-tip="Remove Video">
+							<div className="delete-video" data-tip="Remove Video">
 								<ReactTooltip effect="solid" place="right" />
 								<DeleteIcon
 									onClick={e => {
 										deleteItem(index, videos, setVideos);
 									}}
 								/>
-							</span>
+							</div>
+							</div>
 						</li>
 					);
 				})}
