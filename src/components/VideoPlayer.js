@@ -58,26 +58,24 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 		plyrRef.current.plyr.loop = loop;
 	}, [loop]);
 
-	useEffect(() => {
-		if (autoplayNext) {
-			plyrRef.current.plyr.on('ended', function() {
-				nextVideoCallback();
-			});
-		}
-	}, [autoplayNext, nextVideoCallback]);
+	const autoPlayCallback = () => {
+		plyrRef.current.plyr.play();
+	};
 
 	useEffect(() => {
 		if (autoplayNext) {
-			plyrRef.current.plyr.on('ended', function() {
-				nextVideoCallback();
-			});
-			plyrRef.current.plyr.on('ready', function() {
-				plyrRef.current.plyr.play();
-			});
+			plyrRef.current.plyr.on('ended', nextVideoCallback);
+			plyrRef.current.plyr.on('ready', autoPlayCallback);
+		} else {
+			plyrRef.current.plyr.off('ready', autoPlayCallback);
+			plyrRef.current.plyr.off('ended', nextVideoCallback);
 		}
-	}, [currentVideo, nextVideoCallback]);
-	// note we don't want to run this effect on autoplayNex change, since that would cause
-	// pressing the "autoplay next" button to also play the video
+
+		return () => {
+			plyrRef.current.plyr.off('ready', autoPlayCallback);
+			plyrRef.current.plyr.off('ended', nextVideoCallback);
+		}
+	}, [autoplayNext]);
 
 	return (
 		<div className="video-panel">
