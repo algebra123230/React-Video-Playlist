@@ -19,7 +19,7 @@ export default function Toolbar({ toggle, setSidebar, showSideBar }) {
 				<a
 					target="_BLANK"
 					rel="noopener noreferrer"
-					href="https://github.com/PJijin/React-Video-Playlist"
+					href="https://github.com/algebra123230/React-Video-Playlist"
 					data-tip="View On Github"
 					className="round-button-inverse"
 				>
