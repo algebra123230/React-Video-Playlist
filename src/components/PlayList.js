@@ -17,7 +17,7 @@ export default function PlayList({ videos, currentVideo, setCurrentVideo, setVid
 			<ul>
 				{videos.length === 0 ? <span className="text-muted">No video's in the Playlist</span> : ''}
 				{videos.map((video, index) => {
-          let videoName = video.name ? video.name : `Video ${index + 1}`;
+					let videoName = video.name ? video.name : `Video ${index + 1}`;
 					// console.log(video.name);
 					return (
 						<li key={video.url} className={currentVideo === video ? 'active' : ''} title={videoName}>
@@ -26,15 +26,15 @@ export default function PlayList({ videos, currentVideo, setCurrentVideo, setVid
 								<div className="video-title">
 									{videoName}
 								</div>
-							<div className="delete-video" data-tip="Remove Video">
+							</div>
+							<span className="delete-video" data-tip="Remove Video">
 								<ReactTooltip effect="solid" place="right" />
 								<DeleteIcon
 									onClick={e => {
 										deleteItem(index, videos, setVideos);
 									}}
 								/>
-							</div>
-							</div>
+							</span>
 						</li>
 					);
 				})}
