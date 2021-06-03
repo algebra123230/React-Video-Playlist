@@ -85,6 +85,10 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 		}
 	}, [autoplayNext]);
 
+	useEffect(() => {
+		document.title = currentVideo.name + " - React Video Player";
+	}, [currentVideo]);
+
 	return (
 		<div className="video-panel">
 			{currentVideo ? (
