@@ -42,7 +42,8 @@ const handlePlaylist = (value, videos, setVideos) => {
 	return true;
 };
 
-const videosInitialData = () => {
+const initializeVideoData = () => {
+	console.log("initializing video data");
 	const lData = localStorage.getItem('videos');
 	console.log(lData);
 	const videosData = JSON.parse(lData);
@@ -52,8 +53,9 @@ const videosInitialData = () => {
 
 function App() {
 	const darkMode = useDarkMode(false);
-	const [videos, setVideos] = useState(videosInitialData());
-	const [currentVideo, setCurrentVideo] = useState(videos[0]);
+	const [videos, setVideos] = useState(() => initializeVideoData());
+	const [currentVideo, setCurrentVideo] = useState(() => videos[0]);
+	const [currentVideoIndex, setCurrentVideoIndex] = useState(() => (videos.length > 0 ? 0 : undefined));
 	const [showListMode, setShowListMode] = useState(false);
 	const [showSideBar, setSidebar] = useState(true);
 	const [error, setError] = useState(false);
@@ -61,6 +63,33 @@ function App() {
 	const showList = () => {
 		setShowListMode(!showListMode);
 	};
+
+	const previousVideoCallback = () => {
+		if (currentVideoIndex !== undefined) {
+			let newIndex = currentVideoIndex;
+			if (currentVideoIndex <= 0) {
+				newIndex = videos.length;
+			}
+			newIndex--;
+			setVideoByIndex(newIndex);
+		}
+	}
+
+	const nextVideoCallback = () => {
+		if (currentVideoIndex !== undefined) {
+			let newIndex = currentVideoIndex;
+			newIndex++;
+			if (currentVideoIndex >= videos.length) {
+				newIndex = 0;
+			}
+			setVideoByIndex(newIndex);
+		}
+	}
+
+	const setVideoByIndex = (newIndex) => {
+		setCurrentVideoIndex(newIndex);
+		setCurrentVideo(videos[newIndex]);
+	}
 
 	return (
 		<div className="App d-flex">
@@ -114,11 +143,15 @@ function App() {
 				</div>
 			)}
 
-			<div className="video-player-section">
+			<div className="video-panel-section">
 				<Toolbar toggle={darkMode.toggle} setSidebar={setSidebar} showSideBar={showSideBar} />
 				<div className="grow d-flex center">
 					<div className="w-100">
-						<VideoPlayer currentVideo={currentVideo} />
+						<VideoPlayer
+							currentVideo={currentVideo}
+							previousVideoCallback={() => (previousVideoCallback())}
+							nextVideoCallback={() => (nextVideoCallback())}
+						/>
 					</div>
 				</div>
 			</div>

@@ -269,7 +269,7 @@ li:hover .delete-video {
 	min-width: 450px;
 }
 
-.video-player {
+.video-panel {
 	display: flex;
 	justify-content: center;
 	align-content: center;
@@ -277,15 +277,38 @@ li:hover .delete-video {
 	margin: 0 auto;
 }
 
-.video-player-section {
+.video-panel-section {
 	flex-grow: 1;
 	flex: 4;
 	display: flex;
 	flex-direction: column;
 }
 
-.video-player-section .grow {
+.video-panel-section .grow {
 	flex-grow: 1;
+}
+
+.video-container {
+  --button-ui-color: #00b3ff;
+}
+
+.video-container .additional-controls {
+  display: flex;
+  padding-bottom: 5px;
+}
+
+.video-container .additional-controls div {
+	border-radius: 5px;
+	text-align: center;
+	align-items: center;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 2px;
+	cursor: pointer;
+}
+
+.video-container .additional-controls .toggled {
+  background-color: var(--button-ui-color);
 }
 
 .toolbar {
@@ -322,7 +345,7 @@ li:hover .delete-video {
 	.toolbar {
 		position: unset;
 	}
-	.video-player {
+	.video-panel {
 		display: block;
 		margin: 0px;
 		margin-bottom: 30px;
