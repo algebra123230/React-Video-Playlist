@@ -55,26 +55,33 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 	const [autoplayNext, setAutoplayNext] = useState(false);
 
 	useEffect(() => {
-		plyrRef.current.plyr.loop = loop;
+		console.log("plyrRef.current = " + plyrRef.current);
+		if (plyrRef.current !== undefined && plyrRef.current.plyr !== undefined) {
+			plyrRef.current.plyr.loop = loop;
+		}
 	}, [loop]);
 
 	const autoPlayCallback = () => {
-		plyrRef.current.plyr.play();
+		if (plyrRef.current !== undefined && plyrRef.current.plyr !== undefined) {
+			plyrRef.current.plyr.play();
+		}
 	};
 
 	useEffect(() => {
-		let player = plyrRef.current.plyr;
-		if (autoplayNext) {
-			player.on('ended', nextVideoCallback);
-			player.on('ready', autoPlayCallback);
-		} else {
-			player.off('ready', autoPlayCallback);
-			player.off('ended', nextVideoCallback);
-		}
+		if (plyrRef.current !== undefined && plyrRef.current.plyr !== undefined) {
+			let player = plyrRef.current.plyr;
+			if (autoplayNext) {
+				player.on('ended', nextVideoCallback);
+				player.on('ready', autoPlayCallback);
+			} else {
+				player.off('ready', autoPlayCallback);
+				player.off('ended', nextVideoCallback);
+			}
 
-		return () => {
-			player.off('ready', autoPlayCallback);
-			player.off('ended', nextVideoCallback);
+			return () => {
+				player.off('ready', autoPlayCallback);
+				player.off('ended', nextVideoCallback);
+			}
 		}
 	}, [autoplayNext]);
 
