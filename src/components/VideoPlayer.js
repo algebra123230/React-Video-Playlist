@@ -63,17 +63,18 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 	};
 
 	useEffect(() => {
+		let player = plyrRef.current.plyr;
 		if (autoplayNext) {
-			plyrRef.current.plyr.on('ended', nextVideoCallback);
-			plyrRef.current.plyr.on('ready', autoPlayCallback);
+			player.on('ended', nextVideoCallback);
+			player.on('ready', autoPlayCallback);
 		} else {
-			plyrRef.current.plyr.off('ready', autoPlayCallback);
-			plyrRef.current.plyr.off('ended', nextVideoCallback);
+			player.off('ready', autoPlayCallback);
+			player.off('ended', nextVideoCallback);
 		}
 
 		return () => {
-			plyrRef.current.plyr.off('ready', autoPlayCallback);
-			plyrRef.current.plyr.off('ended', nextVideoCallback);
+			player.off('ready', autoPlayCallback);
+			player.off('ended', nextVideoCallback);
 		}
 	}, [autoplayNext]);
 
@@ -87,14 +88,14 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 						</div>
 						<div className={loop ? "toggled" : ""} title="Loop">
 							<LoopIcon onClick={e => {
-								setLoop(!loop);
-								setAutoplayNext(false);
+								setLoop(() => !loop);
+								setAutoplayNext(() => false);
 							}}/>
 						</div>
 						<div className={autoplayNext ? "toggled" : ""} title="Autoplay Next">
 							<PlayCircleOutlineIcon onClick={e => {
-								setAutoplayNext(!autoplayNext);
-								setLoop(false);
+								setAutoplayNext(() => !autoplayNext);
+								setLoop(() => false);
 							}}/>
 						</div>
 						<div title="Next Video">

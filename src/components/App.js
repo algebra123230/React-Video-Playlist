@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useDarkMode from 'use-dark-mode';
 import ReactTooltip from 'react-tooltip';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
@@ -54,8 +54,8 @@ const initializeVideoData = () => {
 function App() {
 	const darkMode = useDarkMode(false);
 	const [videos, setVideos] = useState(() => initializeVideoData());
-	const [currentVideo, setCurrentVideo] = useState(() => videos[0]);
-	const [currentVideoIndex, setCurrentVideoIndex] = useState(() => (videos.length > 0 ? 0 : undefined));
+	const [currentVideo, setCurrentVideo] = useState(videos[0]);
+	const [currentVideoIndex, setCurrentVideoIndex] = useState(videos.length > 0 ? 0 : undefined);
 	const [showListMode, setShowListMode] = useState(false);
 	const [showSideBar, setSidebar] = useState(true);
 	const [error, setError] = useState(false);
@@ -65,31 +65,43 @@ function App() {
 	};
 
 	const previousVideoCallback = () => {
-		if (currentVideoIndex !== undefined) {
-			let newIndex = currentVideoIndex;
-			if (currentVideoIndex <= 0) {
-				newIndex = videos.length;
+		setCurrentVideoIndex((curIndex) => {
+			if (curIndex !== undefined) {
+				let newIndex = curIndex;
+				newIndex--;
+				if (newIndex < 0) {
+					newIndex = videos.length - 1;
+				}
+				return newIndex;
 			}
-			newIndex--;
-			setVideoByIndex(newIndex);
-		}
+			return undefined;
+		});
 	}
 
 	const nextVideoCallback = () => {
-		if (currentVideoIndex !== undefined) {
-			let newIndex = currentVideoIndex;
-			newIndex++;
-			if (currentVideoIndex >= videos.length) {
-				newIndex = 0;
+		setCurrentVideoIndex((curIndex) => {
+			if (curIndex !== undefined) {
+				let newIndex = curIndex;
+				newIndex++;
+				console.log("curIndex = " + curIndex + ", newIndex = " + newIndex + ", videos.length = " + videos.length);
+				if (newIndex >= videos.length) {
+					newIndex = 0;
+				}
+				return newIndex;
 			}
-			setVideoByIndex(newIndex);
-		}
+			return undefined;
+		});
 	}
 
 	const setVideoByIndex = (newIndex) => {
-		setCurrentVideoIndex(newIndex);
-		setCurrentVideo(videos[newIndex]);
+		console.log("setting video to index " + newIndex);
+		setCurrentVideoIndex((curIndex) => newIndex);
+		console.log("currentVideoIndex = " + currentVideoIndex);
 	}
+
+	useEffect(() => {
+		setCurrentVideo(() => videos[currentVideoIndex]);
+	}, [currentVideoIndex, videos]);
 
 	return (
 		<div className="App d-flex">
@@ -137,7 +149,7 @@ function App() {
 					<PlayList
 						videos={videos}
 						currentVideo={currentVideo}
-						setCurrentVideo={setCurrentVideo}
+						setVideoByIndex={setVideoByIndex}
 						setVideos={setVideos}
 					/>
 				</div>
