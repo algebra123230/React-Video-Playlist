@@ -15,7 +15,7 @@ export default function PlayList({ videos, currentVideo, setVideoByIndex, setVid
 		<>
 			<h4>Videos in Playlist {videos.length !== 0 ? <div className="playlist-count">{videos.length}</div> : ''}</h4>
 			<ul>
-				{videos.length === 0 ? <span className="text-muted">No video's in the Playlist</span> : ''}
+				{videos.length === 0 ? <span className="text-muted">No videos in the Playlist</span> : ''}
 				{videos.map((video, index) => {
 					let videoName = video.name ? video.name : `Video ${index + 1}`;
 					// console.log(video.name);

@@ -270,6 +270,11 @@ li:hover .delete-video {
 	min-width: 450px;
 }
 
+.video-container.hidden {
+  visibility: hidden;
+  height: 0px;
+}
+
 .video-panel {
 	display: flex;
 	justify-content: center;

@@ -27,7 +27,7 @@ const VideoPlayer = React.memo(React.forwardRef(({ currentVideo }, ref) => {
 			type: 'video',
 				sources: [
 					{
-						src: currentVideo.url,
+						src: currentVideo?.url ?? 'https://cdn.plyr.io/static/blank.mp4',
 						type: 'video/mp4',
 						size: 720
 					}
@@ -91,8 +91,8 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 
 	return (
 		<div className="video-panel">
-			{currentVideo ? (
-				<div className="video-container">
+			<div>
+				<div className={currentVideo ? "video-container" : "video-container hidden"}>
 					<div className="additional-controls">
 						<div title="Previous Video">
 							<SkipPreviousIcon onClick={e => {previousVideoCallback()}}/>
@@ -117,21 +117,25 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 						currentVideo={currentVideo}
 						ref={plyrRef}
 					/>
-					<div className="flex center label-name">{currentVideo.name}</div>
+
+					{currentVideo && (
+						<div className="flex center label-name">{currentVideo.name}</div>
+					)}
 				</div>
-			) : (
-				<div className="text-muted">
-					<p>
-						1. Click on the
-						<span className="c-icon">
-							<PlaylistAddIcon />
-						</span>
-						Playlist icon
-					</p>
-					<p>2. Add URLs separated by comma</p>
-					<p>3. Save playlist and watch video</p>
-				</div>
-			)}
+				{!currentVideo && (
+					<div className="text-muted">
+						<p>
+							1. Click on the
+							<span className="c-icon">
+								<PlaylistAddIcon />
+							</span>
+							Playlist icon
+						</p>
+						<p>2. Add URLs separated by comma</p>
+						<p>3. Save playlist and watch video</p>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

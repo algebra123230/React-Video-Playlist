@@ -83,7 +83,6 @@ function App() {
 			if (curIndex !== undefined) {
 				let newIndex = curIndex;
 				newIndex++;
-				console.log("curIndex = " + curIndex + ", newIndex = " + newIndex + ", videos.length = " + videos.length);
 				if (newIndex >= videos.length) {
 					newIndex = 0;
 				}
@@ -96,7 +95,6 @@ function App() {
 	const setVideoByIndex = (newIndex) => {
 		console.log("setting video to index " + newIndex);
 		setCurrentVideoIndex((curIndex) => newIndex);
-		console.log("currentVideoIndex = " + currentVideoIndex);
 	}
 
 	useEffect(() => {
