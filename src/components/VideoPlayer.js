@@ -55,21 +55,20 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 	const [autoplayNext, setAutoplayNext] = useState(false);
 
 	useEffect(() => {
-		console.log("plyrRef.current = " + plyrRef.current);
-		if (plyrRef.current !== undefined && plyrRef.current.plyr !== undefined) {
+		if (plyrRef?.current?.plyr) {
 			plyrRef.current.plyr.loop = loop;
 		}
 	}, [loop]);
 
 	const autoPlayCallback = () => {
-		if (plyrRef.current !== undefined && plyrRef.current.plyr !== undefined) {
+		if (plyrRef?.current?.ply) {
 			plyrRef.current.plyr.play();
 		}
 	};
 
 	useEffect(() => {
-		if (plyrRef.current !== undefined && plyrRef.current.plyr !== undefined) {
-			let player = plyrRef.current.plyr;
+		let player = plyrRef?.current?.plyr;
+		if (player) {
 			if (autoplayNext) {
 				player.on('ended', nextVideoCallback);
 				player.on('ready', autoPlayCallback);
@@ -86,8 +85,9 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 	}, [autoplayNext]);
 
 	useEffect(() => {
-		document.title = currentVideo.name + " - React Video Player";
+		document.title = (currentVideo?.name ?? "No Video") + " - React Video Player";
 	}, [currentVideo]);
+
 
 	return (
 		<div className="video-panel">

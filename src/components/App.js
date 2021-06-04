@@ -100,7 +100,8 @@ function App() {
 	}
 
 	useEffect(() => {
-		setCurrentVideo(() => videos[currentVideoIndex]);
+		setCurrentVideo(() =>
+			currentVideoIndex !== undefined ? videos[currentVideoIndex] : undefined);
 	}, [currentVideoIndex, videos]);
 
 	return (
