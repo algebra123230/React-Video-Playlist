@@ -27,20 +27,30 @@ const deserializeData = data => {
 	return urls;
 }
 
-const handlePlaylist = (value, videos, setVideos) => {
-	const lines = value.split('\n');
+function TextImporter({ addVideos, showImporter }) {
+	const [error, setError] = useState(false);
 
-	const storeVideos = urlList => {
-		let newUrlList = videos.concat(urlList);
-		localStorage.setItem('videos', JSON.stringify(newUrlList));
-		setVideos(newUrlList);
-	};
-
-	let urls = deserializeData(lines);
-	storeVideos(urls);
-
-	return true;
-};
+	return (
+		<form
+			onSubmit={e => {
+				e.preventDefault();
+				if (addVideos(deserializeData(e.target.playlisturls.value.split('\n')))) {
+					showImporter();
+					setError();
+				} else setError('URL List contains invalid URL');
+			}}
+			className="playlist-form"
+		>
+			{error && <div className="alert-error">{error}</div>}
+			<textarea
+				name="playlisturls"
+				required
+				placeholder="Add videos to playlist (separated by newline). You can add custom name to videos (separated by space) Eg: VideoURL NAME."
+			/>
+			<button className="right button-primary">Add to Playlist</button>
+		</form>
+	);
+}
 
 const initializeVideoData = () => {
 	console.log("initializing video data");
@@ -56,12 +66,18 @@ function App() {
 	const [videos, setVideos] = useState(() => initializeVideoData());
 	const [currentVideo, setCurrentVideo] = useState(videos[0]);
 	const [currentVideoIndex, setCurrentVideoIndex] = useState(videos.length > 0 ? 0 : undefined);
-	const [showListMode, setShowListMode] = useState(false);
+	const [showImporterMode, setShowImporterMode] = useState(false);
 	const [showSideBar, setSidebar] = useState(true);
-	const [error, setError] = useState(false);
 
-	const showList = () => {
-		setShowListMode(!showListMode);
+	const addVideos = urls => {
+		let newUrls = videos.concat(urls);
+		localStorage.setItem('videos', JSON.stringify(newUrls));
+		setVideos(newUrls);
+		return true;
+	};
+
+	const showImporter = () => {
+		setShowImporterMode(!showImporterMode);
 	};
 
 	const previousVideoCallback = () => {
@@ -107,7 +123,7 @@ function App() {
 			{showSideBar && (
 				<div className="sidebar">
 					<div className="right">
-						<div data-tip="Add to Playlist" className="round-button" onClick={() => showList()}>
+						<div data-tip="Add to Playlist" className="round-button" onClick={() => showImporter()}>
 							<ReactTooltip effect="solid" place="right" />
 							<PlaylistAddIcon />
 						</div>
@@ -124,25 +140,11 @@ function App() {
 							<ClearAllIcon fontSize="small" />
 						</div>
 					</div>
-					{showListMode && (
-						<form
-							onSubmit={e => {
-								e.preventDefault();
-								if (handlePlaylist(e.target.playlisturls.value, videos, setVideos)) {
-									showList();
-									setError();
-								} else setError('URL List contains invalid URL');
-							}}
-							className="playlist-form"
-						>
-							{error && <div className="alert-error">{error}</div>}
-							<textarea
-								name="playlisturls"
-								required
-								placeholder="Add videos to playlist (separated by newline). You can add custom name to videos (separated by space) Eg: VideoURL NAME."
-							/>
-							<button className="right button-primary">Add to Playlist</button>
-						</form>
+					{showImporterMode && (
+						<TextImporter
+							addVideos={(urls) => addVideos(urls)}
+							showImporter={() => showImporter()}
+						/>
 					)}
 
 					<PlayList
