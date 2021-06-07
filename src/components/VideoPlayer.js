@@ -61,7 +61,7 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 	}, [loop]);
 
 	const autoPlayCallback = () => {
-		if (plyrRef?.current?.ply) {
+		if (plyrRef?.current?.plyr) {
 			plyrRef.current.plyr.play();
 		}
 	};
