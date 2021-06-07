@@ -7,7 +7,7 @@ const deleteItem = (id, videos, setVideos) => {
 	const newList = videos.filter((item, index) => index !== id);
 	console.log(newList);
 	localStorage.setItem('videos', JSON.stringify(newList));
-	setVideos(newList);
+	setVideos(() => newList);
 };
 
 export default function PlayList({ videos, currentVideo, setVideoByIndex, setVideos }) {

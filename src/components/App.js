@@ -3,13 +3,18 @@ import useDarkMode from 'use-dark-mode';
 import ReactTooltip from 'react-tooltip';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import ClearAllIcon from '@material-ui/icons/ClearAllOutlined';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import { validURL } from './helpers/validUrl';
 import VideoPlayer from './VideoPlayer';
 import Toolbar from './Toolbar';
 import PlayList from './PlayList';
 
+const serializeVideos = videos => {
+	return videos.map(video => video.url + " " + video.name).join('\n');
+};
+
 const deserializeData = data => {
-	let urls = [];
+	let videos = [];
 	data.forEach(l => {
 		let line = l.trim();
 		let i = line.indexOf(' ');
@@ -21,11 +26,11 @@ const deserializeData = data => {
 			url = line;
 		}
 		if (validURL(url)) {
-			urls.push({ url, name });
+			videos.push({ url, name });
 		}
 	});
-	return urls;
-}
+	return videos;
+};
 
 function TextImporter({ addVideos, showImporter }) {
 	const [error, setError] = useState(false);
@@ -68,16 +73,25 @@ function App() {
 	const [currentVideoIndex, setCurrentVideoIndex] = useState(videos.length > 0 ? 0 : undefined);
 	const [showImporterMode, setShowImporterMode] = useState(false);
 	const [showSideBar, setSidebar] = useState(true);
+	const [downloadUrl, setDownloadUrl] = useState("");
 
-	const addVideos = urls => {
-		let newUrls = videos.concat(urls);
-		localStorage.setItem('videos', JSON.stringify(newUrls));
-		setVideos(newUrls);
+	const addVideos = newVideos => {
+		let updatedVideos = videos.concat(newVideos);
+		localStorage.setItem('videos', JSON.stringify(updatedVideos));
+		setVideos(() => updatedVideos);
 		return true;
 	};
 
 	const showImporter = () => {
-		setShowImporterMode(!showImporterMode);
+		setShowImporterMode(showImporterMode => !showImporterMode);
+	};
+
+	const downloadPlaylist = () => {
+		var blob = new Blob([serializeVideos(videos)], { type: "text/plain;charset=utf-8" });
+		const element = document.createElement("a");
+		element.href = URL.createObjectURL(blob);
+		element.download = "playlist.txt";
+		element.click();
 	};
 
 	const previousVideoCallback = () => {
@@ -128,6 +142,11 @@ function App() {
 							<PlaylistAddIcon />
 						</div>
 
+						<div data-tip="Download Playlist" className="round-button" onClick={() => downloadPlaylist()}>
+							<ReactTooltip effect="solid" place="right" />
+							<GetAppIcon />
+						</div>
+
 						<div
 							data-tip="Clear Playlist"
 							className="round-button"
@@ -139,6 +158,7 @@ function App() {
 							<ReactTooltip effect="solid" place="right" />
 							<ClearAllIcon fontSize="small" />
 						</div>
+
 					</div>
 					{showImporterMode && (
 						<TextImporter
