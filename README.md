@@ -12,11 +12,10 @@ Live Preview: <a href="https://algebra123230.github.io/React-Video-Playlist/" ta
 
 
 
-  <p align="center">
-   Original made by <a href="https://twitter.com/jp1016v1"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/jp1016v1?style=social"></a>
+Original made by <a href="https://twitter.com/jp1016v1"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/jp1016v1?style=social"></a>
 <a href="https://twitter.com/PJijin"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/PJijin?style=social"></a>.
-	 This fork maintained by algebra123230.
-  </p>
+
+This fork maintained by algebra123230.
  
 
 
