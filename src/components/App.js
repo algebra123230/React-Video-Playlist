@@ -153,7 +153,7 @@ function App() {
 		<div className="App d-flex">
 			{showSideBar && (
 				<div className="sidebar">
-					<div className="right">
+					<div className="sidebar-controls right">
 						<div data-tip="Add to Playlist" className="round-button" onClick={() => showImporter()}>
 							<ReactTooltip effect="solid" place="right" />
 							<PlaylistAddIcon />
@@ -192,8 +192,8 @@ function App() {
 								</Button>
 							</DialogActions>
 						</Dialog>
-
 					</div>
+
 					{showImporterMode && (
 						<TextImporter
 							addVideos={(urls) => addVideos(urls)}
@@ -201,12 +201,14 @@ function App() {
 						/>
 					)}
 
-					<PlayList
-						videos={videos}
-						currentVideo={currentVideo}
-						setVideoByIndex={setVideoByIndex}
-						setVideos={setVideos}
-					/>
+					<div class="sidebar-playlist">
+						<PlayList
+							videos={videos}
+							currentVideo={currentVideo}
+							setVideoByIndex={setVideoByIndex}
+							setVideos={setVideos}
+						/>
+					</div>
 				</div>
 			)}
 
