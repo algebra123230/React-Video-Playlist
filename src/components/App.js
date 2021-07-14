@@ -201,7 +201,7 @@ function App() {
 						/>
 					)}
 
-					<div class="sidebar-playlist">
+					<div className="sidebar-playlist">
 						<PlayList
 							videos={videos}
 							currentVideo={currentVideo}

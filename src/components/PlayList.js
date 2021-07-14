@@ -13,8 +13,8 @@ const deleteItem = (id, videos, setVideos) => {
 export default function PlayList({ videos, currentVideo, setVideoByIndex, setVideos }) {
 	return (
 		<>
-			<h4 class="playlist-header">Videos in Playlist {videos.length !== 0 ? <div className="playlist-count">{videos.length}</div> : ''}</h4>
-			<ul class="playlist-content">
+			<h4 className="playlist-header">Videos in Playlist {videos.length !== 0 ? <div className="playlist-count">{videos.length}</div> : ''}</h4>
+			<ul className="playlist-content">
 				{videos.length === 0 ? <span className="text-muted">No videos in the Playlist</span> : ''}
 				{videos.map((video, index) => {
 					let videoName = video.name ? video.name : `Video ${index + 1}`;
