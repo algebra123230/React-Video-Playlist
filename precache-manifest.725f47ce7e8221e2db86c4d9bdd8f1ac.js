@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c55c379ba49160ed5bebb8714aec5543",
+    "revision": "3acbef3df681d36c3e1003e5aca7c616",
     "url": "/React-Video-Playlist/index.html"
   },
   {
-    "revision": "477413b8743a69f4efc4",
-    "url": "/React-Video-Playlist/static/css/main.1b8ef144.chunk.css"
+    "revision": "0ff544ca5fb90c2c5c87",
+    "url": "/React-Video-Playlist/static/css/main.f3bff9d2.chunk.css"
   },
   {
     "revision": "a168708d591d18c3ac60",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/React-Video-Playlist/static/js/2.3d915610.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "477413b8743a69f4efc4",
-    "url": "/React-Video-Playlist/static/js/main.4aed3c76.chunk.js"
+    "revision": "0ff544ca5fb90c2c5c87",
+    "url": "/React-Video-Playlist/static/js/main.2e74a88c.chunk.js"
   },
   {
     "revision": "94a9a525e34022d251df",
