@@ -184,7 +184,7 @@ function App() {
 								</DialogContentText>
 							</DialogContent>
 							<DialogActions>
-								<Button onClick={closeClearPlaylistDialog} color="default" autoFocus>
+								<Button onClick={closeClearPlaylistDialog} color="default">
 									Cancel
 								</Button>
 								<Button onClick={() => {clearPlaylist(); closeClearPlaylistDialog();}} color="primary">
