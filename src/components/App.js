@@ -236,7 +236,11 @@ function App() {
 						/>
 						{currentVideo && (
 							<div className="flex center video-name">
-								<EditableTextField uniqueKey={currentVideo.url} name="video-name-textfield" value={currentVideo.name} updateValueCallback={(newName) => editVideoName(newName)}
+								<EditableTextField
+									uniqueKey={currentVideo.url}
+									name="video-name-textfield"
+									value={currentVideo.name ? currentVideo.name : `Video ${currentVideoIndex+1}`}
+									updateValueCallback={(newName) => editVideoName(newName)}
 								/>
 							</div>
 						)}

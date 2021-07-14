@@ -34,17 +34,39 @@ function EditableTextField({uniqueKey, name, value, updateValueCallback}) {
 		}
 	}, [editMode]);
 
+	const getTextWidth = (text) => {
+		let div = document.createElement('div');
+		div.innerText = text;
+		div.style.width = 'auto';
+		div.style.visibility = 'hidden';
+		div.style.display = 'inline-block';
+		div.style.position = 'fixed';
+		div.style.overflow = 'auto';
+		document.body.append(div);
+		let width = div.clientWidth;
+		div.remove();
+		return width;
+	}
+
+	const getInputWidth = (text) => {
+		let width = getTextWidth(text) + 60;
+		return width > 1280 ? 1280 : width;
+	}
+
+	const inputWidth = getInputWidth(value);
+
 	return (
+		<div style={{width: `${inputWidth}px`}}>
 		<TextField
 			key={uniqueKey}
 			name={name}
 			defaultValue={value}
-			margin="normal"
-			error={value === ""}
+			title={value}
 			onBlur={handleBlur}
 			onClick={handleClick}
 			onKeyPress={handleKeyPress}
 			disabled={!editMode}
+			fullWidth={true}
 			InputProps={{
 				startAdornment: 
 					<InputAdornment position="start">
@@ -53,6 +75,7 @@ function EditableTextField({uniqueKey, name, value, updateValueCallback}) {
 				, id: inputId
 			}}
 		/>
+		</div>
 	);
 }
 
