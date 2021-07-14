@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import useDarkMode from 'use-dark-mode';
 import ReactTooltip from 'react-tooltip';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import ClearAllIcon from '@material-ui/icons/ClearAllOutlined';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -73,6 +79,7 @@ function App() {
 	const [currentVideoIndex, setCurrentVideoIndex] = useState(videos.length > 0 ? 0 : undefined);
 	const [showImporterMode, setShowImporterMode] = useState(false);
 	const [showSideBar, setSidebar] = useState(true);
+	const [showClearPlaylistDialog, setShowClearPlaylistDialog] = useState(false);
 	const [downloadUrl, setDownloadUrl] = useState("");
 
 	const addVideos = newVideos => {
@@ -132,6 +139,16 @@ function App() {
 			currentVideoIndex !== undefined ? videos[currentVideoIndex] : undefined);
 	}, [currentVideoIndex, videos]);
 
+
+	const closeClearPlaylistDialog = () => {
+		setShowClearPlaylistDialog(false);
+	}
+
+	const clearPlaylist = () => {
+		setVideos([]);
+		localStorage.removeItem('videos');
+	}
+
 	return (
 		<div className="App d-flex">
 			{showSideBar && (
@@ -150,14 +167,31 @@ function App() {
 						<div
 							data-tip="Clear Playlist"
 							className="round-button"
-							onClick={() => {
-								setVideos([]);
-								localStorage.removeItem('videos');
-							}}
+							onClick={() => {setShowClearPlaylistDialog(true)}}
 						>
 							<ReactTooltip effect="solid" place="right" />
 							<ClearAllIcon fontSize="small" />
 						</div>
+
+						<Dialog
+							open={showClearPlaylistDialog}
+							onClose={closeClearPlaylistDialog}
+						>
+							<DialogTitle>{"Clear Playlist?"}</DialogTitle>
+							<DialogContent>
+								<DialogContentText>
+									Are you sure you want to clear your playlist?
+								</DialogContentText>
+							</DialogContent>
+							<DialogActions>
+								<Button onClick={closeClearPlaylistDialog} color="default" autoFocus>
+									Cancel
+								</Button>
+								<Button onClick={() => {clearPlaylist(); closeClearPlaylistDialog();}} color="primary">
+									Clear Playlist
+								</Button>
+							</DialogActions>
+						</Dialog>
 
 					</div>
 					{showImporterMode && (

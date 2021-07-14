@@ -17,7 +17,7 @@
 	background-color: #555;
 }
 
-body[class='dark-mode'] {
+body[class~='dark-mode'] {
 	--text-color: #fff;
 	--background-color: #333;
 	--background-light-color: #3e3d3d;
@@ -25,7 +25,7 @@ body[class='dark-mode'] {
 	--video-active-color: #fff;
 }
 
-body[class='light-mode'] {
+body[class~='light-mode'] {
 	--video-active-color: #fff;
 	--text-color: #333;
 	--background-color: #f1f1f1;
