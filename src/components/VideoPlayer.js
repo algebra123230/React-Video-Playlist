@@ -6,7 +6,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 
-const VideoPlayer = React.memo(React.forwardRef(({ currentVideo }, ref) => {
+const VideoPlayer = React.memo(React.forwardRef(({ currentVideoUrl }, ref) => {
 	return (
 		<Plyr
 		ref={ref}
@@ -27,7 +27,7 @@ const VideoPlayer = React.memo(React.forwardRef(({ currentVideo }, ref) => {
 			type: 'video',
 				sources: [
 					{
-						src: currentVideo?.url ?? 'https://cdn.plyr.io/static/blank.mp4',
+						src: currentVideoUrl ?? 'https://cdn.plyr.io/static/blank.mp4',
 						type: 'video/mp4',
 						size: 720
 					}
@@ -47,7 +47,7 @@ const getInitialPlyrSettings = () => {
 	return {};
 };
 
-export default function VideoContainer({ currentVideo, previousVideoCallback, nextVideoCallback }) {
+export default function VideoContainer({ currentVideoUrl, previousVideoCallback, nextVideoCallback }) {
 	const plyrRef = useRef();
 	// can't use autoplay option because we lose the "ended" event
 	// instead we'll programatically trigger "play" on loading next video
@@ -84,15 +84,11 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 		}
 	}, [autoplayNext]);
 
-	useEffect(() => {
-		document.title = (currentVideo?.name ?? "No Video") + " - React Video Player";
-	}, [currentVideo]);
-
 
 	return (
 		<div className="video-panel">
 			<div>
-				<div className={currentVideo ? "video-container" : "video-container hidden"}>
+				<div className={currentVideoUrl ? "video-container" : "video-container hidden"}>
 					<div className="additional-controls">
 						<div title="Previous Video">
 							<SkipPreviousIcon onClick={e => {previousVideoCallback()}}/>
@@ -114,15 +110,12 @@ export default function VideoContainer({ currentVideo, previousVideoCallback, ne
 						</div>
 					</div>
 					<VideoPlayer
-						currentVideo={currentVideo}
+						currentVideoUrl={currentVideoUrl}
 						ref={plyrRef}
 					/>
 
-					{currentVideo && (
-						<div className="flex center label-name">{currentVideo.name}</div>
-					)}
 				</div>
-				{!currentVideo && (
+				{!currentVideoUrl && (
 					<div className="text-muted">
 						<p>
 							1. Click on the

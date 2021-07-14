@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import useDarkMode from 'use-dark-mode';
 import ReactTooltip from 'react-tooltip';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import ClearAllIcon from '@material-ui/icons/ClearAllOutlined';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import { validURL } from './helpers/validUrl';
+import EditableTextField from './EditableTextField';
 import VideoPlayer from './VideoPlayer';
 import Toolbar from './Toolbar';
 import PlayList from './PlayList';
@@ -82,10 +78,13 @@ function App() {
 	const [showClearPlaylistDialog, setShowClearPlaylistDialog] = useState(false);
 	const [downloadUrl, setDownloadUrl] = useState("");
 
-	const addVideos = newVideos => {
-		let updatedVideos = videos.concat(newVideos);
+	const updateVideos = updatedVideos => {
 		localStorage.setItem('videos', JSON.stringify(updatedVideos));
 		setVideos(() => updatedVideos);
+	}
+
+	const addVideos = newVideos => {
+		updateVideos(videos.concat(newVideos));
 		return true;
 	};
 
@@ -129,6 +128,17 @@ function App() {
 		});
 	}
 
+	const editVideoName = (newName) => {
+		let updatedCurVideo = {
+			name: newName,
+			url: currentVideo.url
+		};
+		let updatedVideos = videos;
+		updatedVideos[currentVideoIndex] = updatedCurVideo;
+		updateVideos(updatedVideos);
+		setCurrentVideo((curVideo) => videos[currentVideoIndex]);
+	}
+
 	const setVideoByIndex = (newIndex) => {
 		console.log("setting video to index " + newIndex);
 		setCurrentVideoIndex((curIndex) => newIndex);
@@ -139,6 +149,9 @@ function App() {
 			currentVideoIndex !== undefined ? videos[currentVideoIndex] : undefined);
 	}, [currentVideoIndex, videos]);
 
+	useEffect(() => {
+		document.title = (currentVideo?.name ?? "No Video") + " - React Video Player";
+	}, [currentVideo]);
 
 	const closeClearPlaylistDialog = () => {
 		setShowClearPlaylistDialog(false);
@@ -217,10 +230,16 @@ function App() {
 				<div className="grow d-flex center">
 					<div className="w-100">
 						<VideoPlayer
-							currentVideo={currentVideo}
+							currentVideoUrl={currentVideo?.url}
 							previousVideoCallback={() => (previousVideoCallback())}
 							nextVideoCallback={() => (nextVideoCallback())}
 						/>
+						{currentVideo && (
+							<div className="flex center video-name">
+								<EditableTextField uniqueKey={currentVideo.url} name="video-name-textfield" value={currentVideo.name} updateValueCallback={(newName) => editVideoName(newName)}
+								/>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
