@@ -2,12 +2,9 @@
 
 Paste Video URLs, Make Playlist and watch 📺  
 
-Forked from [PJijin/React-Video-Playlist](https://github.com/PJijin/React-Video-Playlist/blob/master/preview.gif?raw=true 'React Play List').
+Forked from [PJijin/React-Video-Playlist](https://github.com/PJijin/React-Video-Playlist).
 
-[![React Play List](https://github.com/algebra123230/React-Video-Playlist/blob/master/preview.gif?raw=true 'React Play List')]()
- 
-
-Live Preview: <a href="https://videoplayer.now.sh/" target="_BLANK">Click Here</a>
+Live Preview: <a href="https://algebra123230.github.io/React-Video-Playlist/" target="_BLANK">Click Here</a>
 
 <a href="https://codesandbox.io/s/github/algebra123230/React-Video-Playlist/tree/master/?fontsize=14&hidenavigation=1&view=preview">
   <img alt="Edit react-video-playerlist" src="https://codesandbox.io/static/img/play-codesandbox.svg">
@@ -27,11 +24,13 @@ Live Preview: <a href="https://videoplayer.now.sh/" target="_BLANK">Click Here</
 
 ## ✨ Features
 
--   Save video playlist (localstorage).
+- Save video playlist (localstorage).
 
--   Dark / Light mode.
+- Dark / Light mode.
 
--   Easy to manage video playlist.
+- Easy to manage video playlist.
+
+- Autoplay / loop videos in the playlist.
 
 # ⚙️ Usage
 
