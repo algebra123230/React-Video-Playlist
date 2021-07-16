@@ -52,7 +52,7 @@ function TextImporter({ addVideos, showImporter }) {
 			<textarea
 				name="playlisturls"
 				required
-				placeholder="Add videos to playlist (separated by newline). You can add custom name to videos (separated by space) Eg: VideoURL NAME."
+				placeholder="Add videos to playlist, 1 per line. You can add a custom name to videos (separated by space) E.g.: VideoURL NAME."
 			/>
 			<button className="right button-primary">Add to Playlist</button>
 		</form>

@@ -124,7 +124,7 @@ export default function VideoContainer({ currentVideoUrl, previousVideoCallback,
 							</span>
 							Playlist icon
 						</p>
-						<p>2. Add URLs separated by comma</p>
+						<p>2. Add videos to playlist, 1 per line. You can add a custom name to videos (separated by space) E.g.: VideoURL NAME.</p>
 						<p>3. Save playlist and watch video</p>
 					</div>
 				)}
