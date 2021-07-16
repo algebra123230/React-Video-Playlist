@@ -98,6 +98,7 @@ function App() {
 		element.href = URL.createObjectURL(blob);
 		element.download = "playlist.txt";
 		element.click();
+    element.remove();
 	};
 
 	const previousVideoCallback = () => {
